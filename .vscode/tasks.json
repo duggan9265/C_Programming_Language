@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build and Run hello_world.c",
+            "type": "shell",
+            "command": "C:/msys64/usr/bin/bash.exe",
+            "args": [
+                "-c",
+                "export PATH=/mingw64/bin:$PATH && gcc hello_world.c -o hello_world && ./hello_world"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "cwd": "C:/Users/Lenovo/Documents/C_Programming_Language"
+            }
+        }
+    ]
+}
+
+
