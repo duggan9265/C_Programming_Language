@@ -1,0 +1,41 @@
+Conversion Specifications
+
+Printf
+
+Can hav, in general the form %m.pX or %-m.pX
+
+Here, X is a letter (e.g. d or f i.e. a conversion specifier), m is the minimum field width and p the precision
+
+The minimum field width specifies the minimum number of characters to print. For example,
+%4d would display the number 123 as _123 , were _ indicates a space. On the other hand,
+%-4d would display 123 as 123_
+
+%4d would print 12345 as 12345 i.e. no digits are lost.
+
+The precision p is more difficult to explain and depends on the conversion specifier(X).
+
+d - display integer in base 10. .p suggests the minumum number of digits to display
+e - display floating point number in exponential form. p gives how many digits to display after decimal point. 
+Default is 6. p=0 means the decimal point is not displayed.
+f - display floating point number in fixed decimal i.e. not in exponential form. p gives how many digits to 
+display after decimal point. 
+g - display number in either e or f form, depending on the number´s size. p gives the number of significant
+digits to display (i.e. not digits after the decimal point).
+
+Scanf:
+
+Can contain ordinary chracters and conversion specifiers, the same as Printf
+
+with scanf however we do not specify the precision or minimum field width. For the variable 
+to be read, it requires an & in front of it:
+
+                    scanf("%d", &x);
+If one has a format string "%d/%d", and the input is _5/_96
+
+scanf skips the first whitespace, matchs %d with 5, matches / with /, skips the whitespace
+and matches %d with 96. 
+On the other hand, if the input is _5_/_96, scanf skips the whitespace, matches %d with 5
+and then tries to match / in the format string with a space in the input. However as there are none,
+_/_96 is put back for the next call of scanf.
+
+To allow spaces after the first number, the format string should be "%d /%d" instead.
