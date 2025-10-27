@@ -8,6 +8,63 @@
 \begin{document}
 \maketitle
 
-This is a test LaTeX document compiled inside the \texttt{Chapter\_Notes} folder.
+\section{Chapter 5 Notes}
+
+\subsection{Relational Operators}
+
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{Symbol} & \textbf{Meaning}  \\ 
+ $<$ & less than  \\ 
+ $>$ & greater than  \\
+ $<=$ & less than or equal to \\
+ $>=$ & greater than or equal to\\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\noindent The relational operators produce 0 when false and 1 when true e.g. \texttt{1 $<$ 2} produces 1 (true). \texttt{1$>$ 2} produces 0 (false).
+
+\noindent The expression \texttt{i $<$ j $<$ k} doesn´t have the meaning one may expect, as $<$ is left associative. It is equivalent to \texttt{(i$<$j)$<$k} i.e. it tests whether i is less than j, and then the 1 or 0 is compared with the value of k.
+
+\noindent To test if j lies within i and k, the correct expression is \texttt{i$<$j \&\& j$<$k}.
+
+\subsection{Equality Operators}
+
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{Symbol} & \textbf{Meaning}  \\ 
+ == & equal to  \\ 
+ != & not equal to  \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\noindent Like the relational operators, the equality operators are left associative and produce 0 or 1.  However, they have \textit{lower precedence} than the relational operators, meaning the expression 
+\texttt{i$<$j == j$<$k} is equivalent to \texttt{(i$<$j) == (j$<$k)}.
+
+\subsection{Logical Operators}
+
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{Symbol} & \textbf{Meaning}  \\ 
+ ! & logical negation  \\ 
+ \&\& & logical \textit{and}  \\ 
+ $||$ & logical \textit{or}\\
+ \hline
+\end{tabular}
+\end{center}
+
+\noindent The logical operators often produce 0 or 1 as there result. They behave as follows:
+
+\begin{itemize}
+  \item \texttt{!expr} has the value 1 if \textit{expr} has the value 0.
+  \item \texttt{expr1 \&\& expr2} has the value 1 if both expressions are non-zero.
+  \item \texttt{expr1 || expr2} has the value 1 if either \texttt{expr1} or \texttt{expr2} (or both) has a non-zero value.
+\end{itemize}
+
 
 \end{document}
