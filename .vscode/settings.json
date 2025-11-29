@@ -66,5 +66,6 @@
     ],
 
     "editor.rulers": [110],
-    "rewrap.wrappingColumn": 110
+    "rewrap.wrappingColumn": 110,
+    "sarif-viewer.connectToGithubCodeScanning": "off"
 }
