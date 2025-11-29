@@ -1,0 +1,181 @@
+% ------------------ Chapter 5: Selection Statements ----------------------------------
+
+\section{Chapter 5 Notes: Selection Statements}
+
+\subsection{Relational Operators}
+
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{Symbol} & \textbf{Meaning}  \\ 
+ $<$ & less than  \\ 
+ $>$ & greater than  \\
+ $<=$ & less than or equal to \\
+ $>=$ & greater than or equal to\\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\noindent The relational operators produce 0 when false and 1 when true e.g. \texttt{1 $<$ 2} produces 1 (true). \texttt{1$>$ 2} produces 0 (false).
+
+\noindent The expression \texttt{i $<$ j $<$ k} doesn´t have the meaning one may expect, as $<$ is left associative. It is equivalent to \texttt{(i$<$j)$<$k} i.e. it tests whether i is less than j, and then the 1 or 0 is compared with the value of k.
+
+\noindent To test if j lies within i and k, the correct expression is \texttt{i$<$j \&\& j$<$k}.
+
+\subsection{Equality Operators}
+
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{Symbol} & \textbf{Meaning}  \\ 
+ == & equal to  \\ 
+ != & not equal to  \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\noindent Like the relational operators, the equality operators are left associative and produce 0 or 1.  However, they have \textit{lower precedence} than the relational operators, meaning the expression 
+\texttt{i$<$j == j$<$k} is equivalent to \texttt{(i$<$j) == (j$<$k)}.
+
+\subsection{Logical Operators}
+
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{Symbol} & \textbf{Meaning}  \\ 
+ ! & logical negation  \\ 
+ \&\& & logical \textit{and}  \\ 
+ $||$ & logical \textit{or}\\
+ \hline
+\end{tabular}
+\end{center}
+
+\noindent The logical operators often produce 0 or 1 as there result. They behave as follows:
+
+\begin{itemize}
+  \item \texttt{!expr} has the value 1 if \textit{expr} has the value 0.
+  \item \texttt{expr1 \&\& expr2} has the value 1 if both expressions are non-zero.
+  \item \texttt{expr1 || expr2} has the value 1 if either \texttt{expr1} or \texttt{expr2} (or both) has a non-zero value.
+\end{itemize}
+
+\subsection{if statement}
+
+An if statement takes the form
+
+\begin{lstlisting}[caption={if statement}, label={code:if statement}]
+  if (expression) statement
+\end{lstlisting}
+
+\noindent If you want numeroues statements, one can use the curly braces:
+
+\begin{lstlisting}
+  if (line_num == max_lines){
+
+    line_num = 0;
+    page_num++;
+  }
+\end{lstlisting}
+
+\noindent Curly braces can be add to if and if else statements even when not strictly required to aid in readability:
+
+\begin{lstlisting}[caption={Using curly braces for readability in if-else statements}, label={lst:ifelsebraces}]
+#include <stdio.h>
+
+int main(void) {
+    int score = 85;
+
+    // Even though braces aren't strictly required for single statements,
+    // adding them improves clarity and helps prevent future errors.
+    if (score >= 90) {
+        printf("Grade: A\n");
+    } else if (score >= 80) {
+        printf("Grade: B\n");
+    } else {
+        printf("Grade: C or below\n");
+    }
+
+    return 0;
+}
+\end{lstlisting}
+
+\subsubsection{Dangling else Problem}
+
+\noindent An else statement belongs to the nearest if statement that hasn´t already been paired with an else. Using curly braces aids in recognising which else statement belongs to which if statement.
+
+\subsection{Conditional Expressions}
+
+\noindent C provides an operator that allows an expression to produce one of two values depending on the value of a condition. This operator cosists of two symbols (? and :) which have to be used in the following way.
+
+\begin{lstlisting}[caption={Using curly braces for readability in if-else statements}, label={lst:ifelsebraces}]
+  expr1 ? expr2 : expr3
+\end{lstlisting}
+
+\noindent The expressions can be of any type. This operator is unique in C in that it requires 3 operands instead of the usual one or two and is therefore called the ternary operator. It is read as \textit{"if expr1 thhen expr2 else expr3"}.
+
+\noindent expr1 is evaluated, if it is not 0, then expr2 is evaluated and it´s value is the value of the expression. If expr1 is 0, then the value of expr3 is the value of the expression as a whole. For example:
+
+\begin{lstlisting}
+  i = 1;
+  j = 2;
+  k = i>j ? i : j; // if i is greater than j, k is value of i (1), else it is value of  j (2).
+                  // so here, k is 2
+  k = (i>=0 ? i : 0) + j; // k is now 3 (i is greater than 0, so expr2 is evaluated, and has +j added to it)
+\end{lstlisting}
+
+\subsection{Boolean Types}
+
+\noindent None in C89. Need to define a macro ifelsebraces
+\begin{lstlisting}
+  #define BOOL int
+  .
+  .
+  .
+  BOOL flag
+\end{lstlisting}
+
+\noindent In C99 there are boolean types declared basicstyle
+\begin{lstlisting}
+  _Bool flag
+\end{lstlisting}
+
+\noindent where $\_Bool$ is an unsigned integer type that can only be assigned 0 or 1. Giving value greater than 1 usually causes it to be assigned 1. The header file $<stdbool.h>$ can also be used which makes it easier to work with boolean values. It provides a macro, bool, that stands for $\_Bool$.
+
+\subsection{Switch Statement}
+
+\noindent Similar to a case statement in VHDL/Ada. Its syntax is:
+
+\begin{lstlisting}
+  switch (expression) {
+    case constant-expression : statements
+    ... 
+    case constant-exprsion : statements
+    default : statements
+  }
+\end{lstlisting}
+
+\noindent For example:
+
+
+\begin{lstlisting}
+
+  int grade = 2;
+  
+switch (grade) {
+    case 1:
+        printf("Grade: A\n");
+        break;
+    case 2:
+        printf("Grade: B\n");
+        break;
+    case 3:
+        printf("Grade: C\n");
+        break;
+    default:
+        printf("Grade: F (fail)\n");
+        break;
+}
+
+\end{lstlisting}
+
+\noindent Here, the value of the variable grade is tested against different values. As int grade = 2, when case 2 is executed, the statement inside this case will execute. Each case ends with a break; to prevent "fall-through". Without the break;, the next case is evaluated even if the condition doesn´t match.
+

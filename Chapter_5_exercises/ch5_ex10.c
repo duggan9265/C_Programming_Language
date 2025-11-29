@@ -5,7 +5,7 @@ int main(void){
     int num_grade;
 
     printf("Enter the grade value: ");
-    scanf("&d",&num_grade);
+    scanf("%d",&num_grade);
 
     num_grade = num_grade/10; //so now we test the tens digit
 

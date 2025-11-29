@@ -1,0 +1,204 @@
+% ------------------ Chapter 2: Input and Output Functions ----------------------------------
+
+\section{Chapter 2 Notes: Input and Output Functions}
+
+\noindent C provides powerful yet simple functions for performing input and output operations. Two of the most commonly used are \texttt{printf()} and \texttt{scanf()}, both defined in the \texttt{<stdio.h>} header file.
+
+\subsection{The \texttt{printf()} Function}
+
+\noindent The \texttt{printf()} function is used to send formatted output to the standard output stream (usually the screen). Its general form is:
+
+\begin{lstlisting}[caption={General form of printf()}, label={code:printf}]
+  printf("control string", expressions);
+\end{lstlisting}
+
+\noindent The control string contains ordinary characters, which are printed as they appear, and conversion specifications, each beginning with a \texttt{\%} character, which tell \texttt{printf()} how to format and display the corresponding expressions. 
+
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{Specifier} & \textbf{Meaning}  \\ 
+ \%d & prints an integer value  \\ 
+ \%f & prints a floating-point value  \\ 
+ \%c & prints a single character \\ 
+ \%s & prints a string of characters \\ 
+ \%02d & prints an integer padded with zeros (e.g. 05) \\ 
+ \%.2f & prints a floating-point number to 2 decimal places \\ 
+ \%.3f & prints a floating-point number to 3 decimal places \\ 
+ \%6.2f & prints a floating-point number in a field width of 6, with 2 digits after the decimal point \\ 
+ \%5d & prints an integer in a field width of 5 characters (right-aligned by default) \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\noindent The general form of a format specification is:
+
+\[
+\% [\textit{flags}] [\textit{width}] [.\textit{precision}] [\textit{length}] \textit{specifier}
+\]
+
+\noindent where:
+\begin{itemize}
+  \item \textbf{width} specifies the minimum number of characters to print.
+  \item \textbf{precision} controls the number of digits after the decimal point for floating-point numbers, or the maximum number of characters printed for strings.
+  \item \textbf{0} flag pads numbers with zeros instead of spaces.
+  \item The output is right-justified by default; use the \texttt{-} flag for left-justification.
+\end{itemize}
+
+\noindent For example:
+
+\begin{lstlisting}[caption={Example of printf() usage}, label={code:printf-example}]
+#include <stdio.h>
+
+int main(void) {
+    int hour = 9, minute = 5;
+    float temperature = 18.437;
+
+    printf("The time is %d:%02d\n", hour, minute);
+    printf("Temperature: %.2f\\textdegree C\n", temperature);
+    printf("Temperature (3dp): %.3f\\textdegree C\n", temperature);
+    printf("Right-aligned field (width 6): %6.2f\\n", temperature);
+    printf("Left-aligned field: %-6.2f\\n", temperature);
+
+    return 0;
+}
+\end{lstlisting}
+
+\noindent This will print:
+\begin{verbatim}
+The time is 9:05
+Temperature: 18.44°C
+Temperature (3dp): 18.437°C
+Right-aligned field (width 6):  18.44
+Left-aligned field: 18.44 
+\end{verbatim}
+
+\noindent Here:
+\begin{itemize}
+  \item \texttt{\%.2f} rounds to 2 decimal places.
+  \item \texttt{\%.3f} rounds to 3 decimal places.
+  \item \texttt{\%6.2f} ensures the total printed field occupies at least 6 characters.
+  \item \texttt{\%-6.2f} left-aligns the number within that 6-character field.
+  \item \texttt{\%02d} pads with leading zeros if the integer has fewer than 2 digits.
+\end{itemize}
+
+\subsection{The \texttt{scanf()} Function}
+
+\noindent The \texttt{scanf()} function reads formatted input from the standard input stream (usually the keyboard). Its general form is:
+
+\begin{lstlisting}[caption={General form of scanf()}, label={code:scanf}]
+  scanf("control string", address list);
+\end{lstlisting}
+
+\noindent The control string works similarly to that of \texttt{printf()}, using format specifiers to determine the type of data being read. Each variable to be read must be preceded by an \texttt{\&} (address-of operator), because \texttt{scanf()} needs to know where to store the input value.
+
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{Specifier} & \textbf{Meaning}  \\ 
+ \%d & reads an integer value  \\ 
+ \%f & reads a floating-point value  \\ 
+ \%c & reads a single character \\ 
+ \%s & reads a string of characters (stops at whitespace) \\ 
+ \%lf & reads a double-precision floating-point number \\ 
+ \%3d & reads at most 3 digits of an integer (useful for limiting input length) \\ 
+ \%5s & reads at most 5 characters into a string (prevents overflow) \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+\noindent The general form of a \texttt{scanf()} conversion specification is:
+
+\[
+\% [\textit{width}] [\textit{length}] \textit{specifier}
+\]
+
+\noindent where:
+\begin{itemize}
+  \item \textbf{width} limits the number of characters read for that input item.
+  \item \textbf{length} is used for type modifiers such as \texttt{l} (for long) or \texttt{lf} (for double).
+\end{itemize}
+
+\noindent For example:
+
+\begin{lstlisting}[caption={Example of scanf() usage}, label={code:scanf-example}]
+#include <stdio.h>
+
+int main(void) {
+    int hour, minute;
+    float temperature;
+
+    printf("Enter a 24-hour time (hh:mm): ");
+    scanf("%d:%d", &hour, &minute);
+
+    printf("Enter current temperature: ");
+    scanf("%f", &temperature);
+
+    printf("You entered %02d:%02d and %.3f\\textdegree C\n", hour, minute, temperature);
+
+    return 0;
+}
+\end{lstlisting}
+
+\noindent If the user inputs:
+\begin{verbatim}
+09:30
+18.437
+\end{verbatim}
+\noindent the program will output:
+\begin{verbatim}
+You entered 09:30 and 18.437°C
+\end{verbatim}
+
+\noindent The precision specifier in \texttt{scanf()} (such as \texttt{\%3d} or \texttt{\%5s}) does not control rounding or decimal places — instead, it limits the number of characters \texttt{scanf()} reads from the input buffer. This prevents reading too many characters into a variable or string.
+
+\subsection{Important Notes and Common Pitfalls}
+
+\begin{itemize}
+  \item \textbf{Always match format specifiers to variable types.}  
+  Using the wrong one (for example, reading a float with \texttt{\%d}) can lead to undefined behaviour.
+
+  \item \textbf{Use \texttt{\&} in \texttt{scanf()}.}  
+  Forgetting it causes the program to overwrite memory at an undefined location, often leading to crashes.  
+  \texttt{scanf("\%d", n);} is incorrect — it should be \texttt{scanf("\%d", \&n);}.
+
+  \item \textbf{Width and precision serve different purposes.}  
+  In \texttt{printf()}, width controls field size and precision controls decimal places.  
+  In \texttt{scanf()}, width controls the \textit{maximum number of characters read}.
+
+  \item \textbf{Whitespace handling:}  
+  \texttt{scanf()} skips leading whitespace (spaces, newlines, tabs) for most format specifiers except \texttt{\%c}, which reads the next character literally — even if it’s a newline.
+
+  \item \textbf{\texttt{\%s} stops at whitespace.}  
+  It reads characters until the first space, tab, or newline. To read full lines of text including spaces, use \texttt{fgets()} instead.
+
+  \item \textbf{Input validation:}  
+  If the user types a non-numeric value when \texttt{\%d} or \texttt{\%f} is expected, \texttt{scanf()} fails and leaves variables unchanged. Always check its return value (the number of items successfully read).
+
+  \item \textbf{Clearing the input buffer:}  
+  After using \texttt{scanf()}, unwanted newline characters can remain in the input buffer and affect the next input.  
+  To safely handle mixed input (e.g. reading both numbers and characters), use:
+  \begin{lstlisting}
+  while (getchar() != '\n'); // clear leftover characters
+  \end{lstlisting}
+
+  \item \textbf{Printing special characters:}  
+  To print a percent sign, use \texttt{\%\%}. For example:
+  \begin{lstlisting}
+  printf("Progress: 100%% complete\n");
+  \end{lstlisting}
+\end{itemize}
+
+\subsection{Summary}
+
+\begin{itemize}
+  \item \texttt{printf()} is used for formatted output; \texttt{scanf()} for formatted input.
+  \item Both functions use format specifiers beginning with \texttt{\%} to handle different data types.
+  \item Field width and precision control output spacing and rounding for \texttt{printf()}, but input limits for \texttt{scanf()}.
+  \item Each variable in \texttt{scanf()} must be preceded by \texttt{\&}.
+  \item \texttt{scanf()} skips whitespace for most specifiers but not for \texttt{\%c}.
+  \item \texttt{printf()} allows control of output precision, padding, and alignment.
+  \item Always ensure the types of variables match their format specifiers.
+\end{itemize}
+
+
