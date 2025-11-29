@@ -1,7 +1,7 @@
 # C Programming: A Modern Approach — Notes and Exercises
 
 This repository contains personal notes, exercises, and example code from *C Programming: A Modern Approach* by K. N. King.  
-The goal is to build a solid foundation in C programming while maintaining clear documentation and reproducible results.
+
 
 ---
 
