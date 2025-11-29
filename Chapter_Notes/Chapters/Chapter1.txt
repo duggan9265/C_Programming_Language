@@ -1,0 +1,64 @@
+\section{Chapter 1: Overview of Some Basic Concepts}
+
+\subsection{Operator v Statement}
+
+An operator is a symbol that acts of data in some way. For example +, -, \% etc.
+
+A statement is a complete instruction that tells a program to do something e.g.
+an if statement, a while statement etc.
+
+\subsection{Strongly Typed v Weakly Typed Language}
+A strongly typed language is one whereby the type of every value is strictly enforced, and does
+not allow one to mix types without an explicit conversion. Ada is a strongly typed language. C is not.
+
+\begin{lstlisting}[caption={Example of Strongly Typed Language}, label={code:stl}]
+#include <stdio.h>
+
+x = float
+y = string
+
+z = x + y \\ Error in STL
+
+z = x + float(y) \\Acceptable in most STL
+\end{lstlisting}
+
+\subsection{Static v Dynamic Typed}
+
+\textbf{Static} means that when a variable is assigned a type, it keeps that type and its type is checked at
+compile time. Example languages are C, Rust, Go and Ada
+
+\begin{lstlisting}[caption={Example of Static Typed Language}, label={code:static}]
+int x = 5;
+x = "hello";   // compile-time error
+\end{lstlisting}
+
+\noindent So, strongly typed --> cannot mix variable types and operations
+
+\noindent Statically typed --> Once a variable is assigned a type it maintains that type and 
+this is checked at compile time.
+
+\textbf{Dynamically typed} means a varibale can be assigned one type somewhere, and re-assigned 
+another type later on. Example languages are Python, JavaScript, Ruby.
+
+\begin{lstlisting}[caption={Example of Static Typed Language}, label={code:static}]
+int x = 5;
+x = "hello";   // NO compile-time error
+\end{lstlisting}
+
+\subsection{Procedural v Functional Language}
+
+\textbf{Procedural} languages are based around writing functions that operate on data. Examples are C,
+Python, Ada. Use looping structures, and can be viewed as carrying out programs step-by-step.
+
+\noindent \textbf{Functional} languages are based on mathematical functions and expressions. Do not have, 
+e.g., for loops, instead using recursion. Example languages are Haskell, OCaml. They are less step-by-step
+and more based around writing and calling functions which are the mian building blocks.
+
+\subsection{Imperative v Declarative Programming}
+
+\textbf{Imperative} programming focuses on how to do something by providing step-by-step instructions.
+Example languages are C, Python, Ada.
+
+\noindent \textbf{Declarative} programming focuses on what the desired outcome is without specifying 
+the exact steps e.g. Coq (Gallina), SQL, Haskell.
+
