@@ -1,0 +1,100 @@
+% ------------------ Chapter 6: Loops ----------------------------------
+
+\section{Chapter 6 Notes: Loops}
+
+\noindent Chapter 5 covered C´s selection statements, if and switch. This chapter introduces C´s 
+iteration statements, which allows one to set up loops.
+
+\noindent A loop is a statement whose job is to repeatedly execute some other statement termed
+the loop body. In C every loop has a controlling statement, and each time the loop body is executed
+(termed an iteration of the loop), the controlling statement is evaluated. If the expression is true, 
+that is, has a value that is not 0, the loop continues to execute.
+
+\noindent C provides 3 interation staements: while, do and for. The While statement is used for
+loops whose controlling expression is tested before the loop body is tested. The Do staement is used
+if the controlling expression is tested after the loop body is executed. The For statemnt is used if
+one wants to increment or decrement a counting variable.
+
+\noindent C also has break, continue and goto staements, which are typically used in conjuction with
+loops.
+
+\subsection{While Statement}
+
+\noindent This is the most simple and most fundamental statement in C. It has the form \textit{
+while (controlling expression) statement}. For example:
+
+    \begin{lstlisting}[caption={While Statement}, label={code:while_statement}]
+
+    while(i<n) /* controlling expression*/
+     i=i*2    /* loop body */
+
+\end{lstlisting}
+
+\noindent When  a While statement is executed, its controlling expression is evaluated first. If its 
+value is non-zero (true), the loop body is evaluated, and the controlling expression tested again. To have
+more than one statement inside the loop body, one can use curly braces:
+
+    \begin{lstlisting}[caption={While Statement Multiple Statements}, label={code:while_statement_mult}]
+
+    while(i>0) {
+        printf("T minus %d and counting\n", i);
+        i--;
+    }
+
+\end{lstlisting}
+
+\noindent A while loop can be used to create an infinite loop via while(1), which executes
+forever unless there is a statement that transfers control out of the loop (e.g. break, goto, return)
+or calls a function that causes the program to terminate.
+
+\subsection{Do Statement}
+
+\noindent Do statement is essentially a While statement whose controlling expression is tested after
+each execution of the loop body.
+
+\begin{lstlisting}[caption={Do Statement}, label={code:do_statement}]
+
+    do (statement) while (expression) ;
+
+\end{lstlisting}
+
+\noindent for example:
+
+
+\begin{lstlisting}[caption={Do Statement Example}, label={code:do_statement_ex}]
+
+    i = 10;
+
+    do {
+
+        printf("T minus %d and counting\n", i);
+        i--
+    }   while (i > 0)
+
+\end{lstlisting}
+
+\noindent This has the same output as the while statement given in the While statment section i.e.
+the Do statement and While statement are indistinguishable. The main difference is that the body of
+a Do statement is always executed at least once, whereas the While statement body may be skipped
+entirely depending on the controlling expression.
+
+\subsection{For Loop}
+
+\noindent The for loop has the form for (expr1 ; expr2 ; expr3) statement. For example
+
+\begin{lstlisting}[caption={For Loop}, label={code:for_loop_ex}]
+
+for(i=10 ; i>0 ; i--)
+    printf("T minus %d and counting\n", i);
+
+\end{lstlisting}
+
+\noindent When this is executed, i is initialised to 10, the loop executes whilst i is greater than 0 
+and i is decremented by 1 each time the loop executes. The body is executed 10 times in all, with i
+varying from 10 down to 1. Thus, expr1 is an intialisation step that is performed only once, expr2 
+controls loop termination (the loop continues to execute as long as the value of expr2 is non-zero
+i.e. true) and expr3 is an operation to be performed at the end of each loop.
+
+
+
+

@@ -62,3 +62,13 @@ Example languages are C, Python, Ada.
 \noindent \textbf{Declarative} programming focuses on what the desired outcome is without specifying 
 the exact steps e.g. Coq (Gallina), SQL, Haskell.
 
+\noindent Difference between i-- and --i:
+
+\begin{lstlisting}[caption={Pre- vs Post-Decrement}, label={code:dec_ops}]
+int i = 5;
+
+int a = i--;   // a = 5, i becomes 4 (post-decrement)
+int b = --i;   // i becomes 3, b = 3 (pre-decrement)
+\end{lstlisting}
+
+
