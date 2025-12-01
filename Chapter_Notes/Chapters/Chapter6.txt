@@ -93,8 +93,101 @@ for(i=10 ; i>0 ; i--)
 and i is decremented by 1 each time the loop executes. The body is executed 10 times in all, with i
 varying from 10 down to 1. Thus, expr1 is an intialisation step that is performed only once, expr2 
 controls loop termination (the loop continues to execute as long as the value of expr2 is non-zero
-i.e. true) and expr3 is an operation to be performed at the end of each loop.
+i.e. true) and expr3 is an operation to be performed at the end of each loop. For loops can omit expr´s
+however the semi-colon must always be present e.g.
+
+\begin{lstlisting}[caption={For Loop}, label={code:for_loop_ex}]
+
+i=10;
+for(; i>0 ; i--)
+    printf("T minus %d and counting\n", i);
+
+\end{lstlisting}
+
+\noindent is valid, as i has been initialised previously. One may want to have two or more intialisation
+expressions or one that increments several expressions each time through the loop. This can be achieved via 
+a comma expression as the first or third expression in the for loop. Forexample
+
+\begin{lstlisting}[caption={For Loop}, label={code:for_loop_ex}]
+
+i=10;
+for(i=1, j=2, k=i+j; k>0 ; k--)
+    printf("T minus %d and counting\n", i);
+
+\end{lstlisting}
+
+\noindent where the comma expression is left associative so i is ¨read¨ first.
+
+\subsection{Break Statement}
+
+\noindent The break statement allows one to exit a loop. Further, it can only exit one level of nesting,
+so a break in an inner nested loop will break out to the next level loop.
+
+\subsection{Continue Statement}
+
+\noindent Continue statements do not exit a loop or statement, transferring control to a point just 
+before the end of a loop. This is in contrast to the break statement which transfers control to a point
+past the end of a loop. Thus, with a continue statement, control remains inside the loop. Also, unlike
+break statments which can be used in switch statements and loops (while, do, for), the continue 
+statement can only be used in the latter. An example usage of the continue statement is:
+
+\begin{lstlisting}[caption={Continue Statement}, label={Continue_stat_ex}]
+
+n = 0;
+sum = 0;
+while (n < 10){
+    scanf(%d,&i);
+    if (i==0)
+        continue;
+    sum += i;
+    n++;
+    /* continue jumps to here */
+}
+
+\end{lstlisting}
+
+\noindent Without continue, the above would have to be written such as:
+
+\begin{lstlisting}[caption={Continue Statement 2}, label={Continue_stat_ex2}]
+
+n = 0;
+sum = 0;
+while (n < 10){
+    scanf(%d,&i);
+    if (i!=0){
+        continue;
+    sum += i;
+    n++;
+    }
+}
+
+\end{lstlisting}
+
+\noindent i.e. the if statement would have to contain the body of the loop, so that the statements 
+for updating the sum and incrementing n are executed only when the condition is satisfied.
+
+\subsection{goto Statement}
+
+\noindent Both the break and and continue statements are jump statements that transfer control from one
+point in the program to another. Both are restricted; break retruns one to a point just after the end of
+the closing loop, whereas continue to a point just before the end of the loop. In contrast, the goto 
+statement is capable of jumping to any statement in a function, provided that the statement has a label.
+
+\noindent A label is an identifier placed at the beginning of a statement - identifier : statement. A 
+statement may have more than one label. The goto statement itself has the form - goto identifier ; .
+As an example:
+
+\begin{lstlisting}[caption={goto statement example}, label={goto_ex}]
+
+    for(d = 2; d < n; d++)
+        if (n % d == 0)
+            goto done;
+
+            done:
+            if (d < n)
+                printf("%d is divisible by %d\n", n, d);
+            else
+                printf("%d is prime\n", n, d);
 
 
-
-
+\end{lstlisting}
