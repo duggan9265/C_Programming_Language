@@ -1,0 +1,128 @@
+% ------------------ Chapter 7: Data Types ----------------------------------
+
+\section{Basic Types}
+
+\subsection{Numeric Types}
+
+\subsubsection{Signed, unsigned, long, short and long long int}
+
+C supports two fundamentally different numeric types: integer types and floating types. Integer types 
+are whole numbers whereas values of a floating type can have fractional parts as well. Integer types in turn
+are divided into two categories; signed and unsigned. With signed, the MSB is in fact a sign bit, 0 being 
+positive and 1 being negative. By default, integer variables in C are signed by default, and one must use the 
+reserved word unsigned to tell the compiler that there is no sign bit.
+
+An integer is typically 32 bits (though this is machine dependent, bieng 16 bits on old CPUs). C also provides
+long integers, which have more than 32 bits. Short integers are also available if one wants to store an 
+integer in less space than normal. The different types can be combined, however, only only the following six 
+combinations actually produce different types:
+\begin{itemize}
+\item short int
+\item unsigned short int
+\item int
+\item unsigned int
+\item long int
+\item unsigned long int
+\end{itemize}
+\noindent Other combinations are synonyms for one of these six types. (For example, long signed int is the 
+same as long int, since integers are always signed unless otherwise specified.) 
+Incidentally, the order of the specifiers doesn't matter; unsigned short int is the same as short unsigned 
+int. C allows us to abbreviate the names of integer types by dropping the word int. For example, unsigned 
+short int may be abbreviated to unsigned short, and long int may be abbreviated to just 1ong. Typical value 
+ranges for the vrious it types are given in figure \ref{fig:int_ranges}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Chapter_7/int_ranges.png}
+    \caption{Typical integer ranges for 16 and 32 bit machines. Taken from \textit{C: A Modern Approach}.}
+    \label{fig:int_ranges}
+\end{figure}
+
+The above ranges vary between compilers. To check the ranges for the various numeric types, one can check 
+the limits.h header file. C99 added long long int and unsigned long long int. Both long long types are 
+required to be at least 64 bits wide.
+
+\subsubsection{Constants}
+
+Constants can be written in decimal (base 10), octal (base 8) or hexadecimal (base 16). Integers can start
+with any number except 0. Octal uses any digit between 0 and 7 and must begin with 0. Hexadecimal can
+contain any digit between 0 and 9, and the letters A to F, and begin with 0x. The different forms can be 
+mixed together when, e.g., adding or subtracting numbers. To force the compiler to treat a constant as a 
+long integer, just follow it with
+the letter L (or 1):
+15L 0377L 0x7fffL
+To indicate that a constant is unsigned, put the letter U (or u) after it:
+15U 0377U 0x7fffU
+L and U may be used in combination to show that a constant is both long and
+unsigned: OxffffffffUL. (The order of the L and U doesn't matter, nor does
+their case.)
+Integer Constants in C99
+In C99, integer constants that end with either LL or 11 (the case of the two letters
+must match) have type long long int. Adding the letter U (or u) before or after
+the LL or 11 denotes a constant of type unsigned long long int.
+
+\subsection{Floating Types}
+
+Integer types are not suitable for all applications. In many cases, we need to represent numbers with 
+fractional parts or values that are extremely large or small. Such numbers are stored using floating-point 
+representation, so called because the position of the decimal point can ``float.'' C provides three 
+floating-point types:
+\begin{itemize}
+\item float
+\item double
+\item long double
+\end{itemize}
+
+These correspond to single-precision, double-precision, and extended-precision floating-point formats, 
+respectively. The \texttt{float} type is appropriate when limited precision is acceptable, 
+while \texttt{double} offers greater precision and is sufficient for most programs. 
+The \texttt{long double} type provides the highest precision, but is used less frequently.
+
+The C standard does not specify the exact precision or range of floating types, as these are machine 
+dependent. Most modern systems follow the IEEE Standard 754 for floating-point arithmetic. Under this 
+standard, floating-point numbers are stored in a form of scientific notation consisting of 
+three components: a sign, an exponent, and a fraction (mantissa). The size of the exponent determines the 
+range of representable values, while the size of the fraction determines precision.
+
+In IEEE 754 single-precision format (32 bits), the exponent is 8 bits and the fraction is 23 bits, giving a
+maximum value of approximately $3.4 \times 10^{38}$ and about 6 decimal digits of precision. Double-precision
+format (64 bits) provides roughly 15 decimal digits of precision and a much larger range. The size of \texttt{long double} varies by implementation, commonly being 80 or 128 bits.
+
+The characteristics of floating types on a given system can be obtained from the \texttt{<float.h>} header 
+file. On systems that do not follow IEEE 754, the ranges and precision may differ.
+
+\subsubsection{Floating Constants}
+
+Floating constants may be written using a decimal point, an exponent, or both. For example, the following 
+are all valid floating constants:
+\begin{verbatim}
+57.0   57.   57.0e0   57E0   5.7e1   570.e-1
+\end{verbatim}
+
+By default, floating constants are treated as type \texttt{double}. To force a constant to be stored as 
+a \texttt{float}, append the letter \texttt{F} or \texttt{f} (e.g., \texttt{57.0F}). To store a constant as a \texttt{long double}, append \texttt{L} or \texttt{l} (e.g., \texttt{57.0L}). C99 also allows hexadecimal floating constants, although they are rarely used.
+
+\subsubsection{Reading and Writing Floating-Point Values}
+
+When reading floating-point values using \texttt{scanf}, different conversion specifiers are required 
+depending on the type. For values of type \texttt{double}, the letter \texttt{l} must precede the conversion specifier:
+\begin{verbatim}
+double d;
+scanf("%lf", &d);
+\end{verbatim}
+
+For values of type \texttt{long double}, the letter \texttt{L} must be used:
+\begin{verbatim}
+long double ld;
+scanf("%Lf", &ld);
+printf("%Lf", ld);
+\end{verbatim}
+
+In calls to \texttt{printf}, the \texttt{e}, \texttt{f}, and \texttt{g} conversion specifiers may be used for
+both \texttt{float} and \texttt{double} values.
+
+\section{Character Types}
+
+The only remaining basic type is char, the character type. The values of char differ from one machine to
+the next as different machines may have different underlying character sets. The most popular is the ASCII 
+set. C treats characters as small integers.
