@@ -1,0 +1,283 @@
+\section{Chapter 3 Notes: Formatted Input and Output}
+
+C provides two powerful formatted I/O functions in \texttt{<stdio.h>}:
+\begin{itemize}
+  \item \texttt{printf()} -- formatted output
+  \item \texttt{scanf()} -- formatted input
+\end{itemize}
+
+Both functions use \textbf{format strings} containing ordinary characters and \textbf{conversion specifications} beginning with \%.
+
+\subsection{3.1 The printf() Function}
+
+The general form is:
+
+\begin{lstlisting}
+printf("format string", expression1, expression2, ...);
+\end{lstlisting}
+
+The format string may contain:
+\begin{itemize}
+  \item Ordinary characters (printed exactly as written)
+  \item Conversion specifications (placeholders beginning with \%)
+\end{itemize}
+
+\subsubsection*{Basic Example}
+
+\begin{lstlisting}
+#include <stdio.h>
+
+int main(void) {
+    int i = 10, j = 20;
+    float x = 43.2892f, y = 5527.0f;
+
+    printf("i = %d, j = %d, x = %f, y = %f\n", i, j, x, y);
+    return 0;
+}
+\end{lstlisting}
+
+Output:
+\begin{verbatim}
+i = 10, j = 20, x = 43.289200, y = 5527.000000
+\end{verbatim}
+
+\subsubsection*{Important Warning}
+
+The compiler does \textbf{not} check that:
+\begin{itemize}
+  \item The number of conversion specifiers matches the number of variables.
+  \item The specifier matches the variable type.
+\end{itemize}
+
+Examples of incorrect usage:
+
+\begin{lstlisting}
+printf("%d %d\n", i);        // too few arguments
+printf("%d\n", i, j);       // too many arguments
+printf("%f %d\n", i, x);    // wrong types
+\end{lstlisting}
+
+These lead to undefined or meaningless output.
+
+\subsubsection{Conversion Specification Structure}
+
+General form:
+
+\[
+\%[flags][width][.precision]specifier
+\]
+
+Common specifiers:
+
+\begin{center}
+\begin{tabular}{|c|l|}
+\hline
+Specifier & Meaning \\
+\hline
+\%d & Integer (decimal) \\
+\%f & Floating-point (fixed decimal) \\
+\%e & Floating-point (scientific notation) \\
+\%g & Automatically chooses \%f or \%e \\
+\%c & Character \\
+\%s & String \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Field Width and Precision}
+
+\begin{itemize}
+  \item \textbf{Width (m)}: Minimum number of characters to print.
+  \item \textbf{Precision (p)}:
+  \begin{itemize}
+      \item For \%d: Minimum number of digits.
+      \item For \%f, \%e: Number of digits after decimal.
+      \item For \%g: Maximum significant digits.
+  \end{itemize}
+  \item Default alignment is right-justified.
+  \item Use \texttt{-} for left-justification.
+\end{itemize}
+
+Examples:
+
+\begin{lstlisting}
+printf("|%d|\n", 40);
+printf("|%5d|\n", 40);
+printf("|%-5d|\n", 40);
+printf("|%5.3d|\n", 40);
+printf("|%10.3f|\n", 839.21);
+printf("|%-10g|\n", 839.21);
+\end{lstlisting}
+
+Key behaviours:
+\begin{itemize}
+  \item \texttt{\%5d} → minimum width 5
+  \item \texttt{\%-5d} → left aligned
+  \item \texttt{\%5.3d} → width 5, at least 3 digits
+  \item \texttt{\%10.3f} → width 10, 3 decimal places
+  \item \texttt{\%g} removes trailing zeros
+\end{itemize}
+
+\subsubsection{Escape Sequences}
+
+Escape sequences begin with \texttt{\textbackslash}.
+
+\begin{center}
+\begin{tabular}{|c|l|}
+\hline
+Sequence & Meaning \\
+\hline
+\texttt{\textbackslash n} & New line \\
+\texttt{\textbackslash t} & Horizontal tab \\
+\texttt{\textbackslash a} & Alert (bell) \\
+\texttt{\textbackslash b} & Backspace \\
+\texttt{\textbackslash "} & Double quote \\
+\texttt{\textbackslash\textbackslash} & Backslash \\
+\hline
+\end{tabular}
+\end{center}
+
+Example:
+
+\begin{lstlisting}
+printf("\"Hello!\"\n");
+printf("\\\n");
+\end{lstlisting}
+
+\subsection{3.2 The scanf() Function}
+
+The general form is:
+
+\begin{lstlisting}
+scanf("format string", &variable1, &variable2, ...);
+\end{lstlisting}
+
+\textbf{Important:} Variables must usually be preceded by \& (address-of operator).
+
+\subsubsection{Basic Example}
+
+\begin{lstlisting}
+int i, j;
+float x, y;
+
+scanf("%d%d%f%f", &i, &j, &x, &y);
+\end{lstlisting}
+
+If the user enters:
+\begin{verbatim}
+1 -20 0.3 -4.0e3
+\end{verbatim}
+
+Values stored:
+\begin{itemize}
+  \item i = 1
+  \item j = -20
+  \item x = 0.3
+  \item y = -4000.0
+\end{itemize}
+
+\subsubsection{How scanf() Works}
+
+\begin{itemize}
+  \item Processes format string from left to right.
+  \item Skips leading whitespace for most specifiers.
+  \item Stops reading when an invalid character is encountered.
+  \item If a match fails, scanning stops immediately.
+\end{itemize}
+
+Recognition rules:
+
+\textbf{Integer (\%d)}:
+\begin{itemize}
+  \item Optional + or -
+  \item One or more digits
+\end{itemize}
+
+\textbf{Floating-point (\%f, \%e, \%g)}:
+\begin{itemize}
+  \item Optional sign
+  \item Digits (optional decimal point)
+  \item Optional exponent (e or E with optional sign)
+\end{itemize}
+
+\subsubsection{Ordinary Characters in Format Strings}
+
+In \texttt{scanf}:
+
+\begin{itemize}
+  \item Whitespace in format string matches any amount of whitespace in input.
+  \item Non-whitespace characters must match exactly.
+\end{itemize}
+
+Example:
+
+\begin{lstlisting}
+scanf("%d/%d", &num, &denom);
+\end{lstlisting}
+
+Input:
+\begin{verbatim}
+5/6
+\end{verbatim}
+
+Works correctly because \texttt{/} must match exactly.
+
+\subsubsection{Common Pitfalls}
+
+\begin{itemize}
+  \item Forgetting \&:
+\begin{lstlisting}
+scanf("%d", n);   // WRONG
+\end{lstlisting}
+
+  \item Mixing printf-style formatting with scanf incorrectly:
+\begin{lstlisting}
+scanf("%d, %d", &i, &j);
+\end{lstlisting}
+Fails if the comma is not present in the input.
+
+  \item Adding \texttt{\textbackslash n} at end of format string may cause program to hang.
+\end{itemize}
+
+\subsection{Example: Adding Fractions}
+
+\begin{lstlisting}
+/* Adds two fractions */
+#include <stdio.h>
+
+int main(void) {
+    int num1, denom1, num2, denom2;
+    int result_num, result_denom;
+
+    printf("Enter first fraction: ");
+    scanf("%d/%d", &num1, &denom1);
+
+    printf("Enter second fraction: ");
+    scanf("%d/%d", &num2, &denom2);
+
+    result_num = num1 * denom2 + num2 * denom1;
+    result_denom = denom1 * denom2;
+
+    printf("The sum is %d/%d\n", result_num, result_denom);
+
+    return 0;
+}
+\end{lstlisting}
+
+Sample session:
+\begin{verbatim}
+Enter first fraction: 5/6
+Enter second fraction: 3/4
+The sum is 38/24
+\end{verbatim}
+
+\subsection{3.3 Summary}
+
+\begin{itemize}
+  \item \texttt{printf()} formats output using conversion specifications.
+  \item \texttt{scanf()} reads formatted input and requires \& for variables.
+  \item Width and precision affect spacing and rounding in \texttt{printf()}.
+  \item In \texttt{scanf()}, width limits characters read (not decimal places).
+  \item The compiler does not check format string correctness.
+  \item Always match specifiers with correct variable types.
+\end{itemize}
