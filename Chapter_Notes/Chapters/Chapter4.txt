@@ -1,0 +1,246 @@
+\section{Chapter 4 Notes: Expressions and Operators}
+
+One of C’s distinguishing characteristics is its emphasis on \textbf{expressions}
+rather than statements. An expression is a formula that computes a value.
+Statements often contain expressions, but in C, expressions themselves play a
+central role.
+
+\subsection{4.1 Expressions}
+
+The simplest expressions are:
+
+\begin{itemize}
+  \item \textbf{Variables} -- represent values that may change during program execution.
+  \item \textbf{Constants} -- fixed values that do not change.
+\end{itemize}
+
+More complex expressions are formed by applying \textbf{operators} to
+\textbf{operands} (which are themselves expressions).
+
+Example:
+
+\begin{lstlisting}
+a + (b * c)
+\end{lstlisting}
+
+Here:
+\begin{itemize}
+  \item \texttt{+} is applied to operands \texttt{a} and \texttt{(b * c)}.
+  \item \texttt{b * c} is itself an expression.
+\end{itemize}
+
+Expressions can therefore be nested inside other expressions.
+
+\subsection{4.2 Arithmetic Operators}
+
+C provides standard arithmetic operators:
+
+\begin{center}
+\begin{tabular}{|c|l|}
+\hline
+Operator & Meaning \\
+\hline
++ & Addition \\
+- & Subtraction \\
+* & Multiplication \\
+/ & Division \\
+\% & Remainder (integers only) \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Integer Division}
+
+If both operands are integers, division discards the fractional part:
+
+\begin{lstlisting}
+7 / 2    // result: 3
+\end{lstlisting}
+
+\subsubsection*{Remainder Operator (\%)}
+
+\begin{lstlisting}
+7 % 2    // result: 1
+\end{lstlisting}
+
+Only valid for integer operands.
+
+\subsection{4.3 Operator Precedence and Associativity}
+
+When expressions contain multiple operators, C follows rules of:
+
+\begin{itemize}
+  \item \textbf{Precedence} -- which operator is evaluated first.
+  \item \textbf{Associativity} -- direction of evaluation when precedence is equal.
+\end{itemize}
+
+Example:
+
+\begin{lstlisting}
+a + b * c
+\end{lstlisting}
+
+Multiplication has higher precedence than addition, so this is interpreted as:
+
+\begin{lstlisting}
+a + (b * c)
+\end{lstlisting}
+
+Most arithmetic operators are \textbf{left associative}:
+
+\begin{lstlisting}
+a - b - c
+\end{lstlisting}
+
+Interpreted as:
+
+\begin{lstlisting}
+(a - b) - c
+\end{lstlisting}
+
+Parentheses should be used to improve clarity.
+
+\subsection{4.4 Assignment Operators}
+
+The assignment operator:
+
+\begin{lstlisting}
+=
+\end{lstlisting}
+
+Assigns the value of the right-hand expression to the left-hand variable.
+
+\begin{lstlisting}
+i = 10;
+\end{lstlisting}
+
+Assignment is itself an expression and has a value (the value assigned).
+
+\begin{lstlisting}
+i = j = k = 0;
+\end{lstlisting}
+
+Assignments associate from right to left.
+
+\subsubsection*{Compound Assignment Operators}
+
+C provides shorthand forms:
+
+\begin{center}
+\begin{tabular}{|c|l|}
+\hline
+Operator & Equivalent To \\
+\hline
++= & x = x + y \\
+-= & x = x - y \\
+*= & x = x * y \\
+/= & x = x / y \\
+\%= & x = x \% y \\
+\hline
+\end{tabular}
+\end{center}
+
+Example:
+
+\begin{lstlisting}
+i += 5;   // same as i = i + 5;
+\end{lstlisting}
+
+\subsection{4.5 Increment and Decrement Operators}
+
+C provides:
+
+\begin{center}
+\begin{tabular}{|c|l|}
+\hline
+Operator & Meaning \\
+\hline
+++ & Increment by 1 \\
+-- & Decrement by 1 \\
+\hline
+\end{tabular}
+\end{center}
+
+These can appear in two forms:
+
+\subsubsection*{Post-increment / Post-decrement}
+
+\begin{lstlisting}
+i++;
+i--;
+\end{lstlisting}
+
+The value is used first, then incremented/decremented.
+
+\begin{lstlisting}
+int i = 5;
+int a = i++;   // a = 5, i becomes 6
+\end{lstlisting}
+
+\subsubsection*{Pre-increment / Pre-decrement}
+
+\begin{lstlisting}
+++i;
+--i;
+\end{lstlisting}
+
+The value is incremented/decremented first.
+
+\begin{lstlisting}
+int i = 5;
+int a = ++i;   // i becomes 6, a = 6
+\end{lstlisting}
+
+This distinction is important inside expressions.
+
+\subsection{4.6 Order of Evaluation}
+
+C does not always specify the order in which parts of an expression are evaluated.
+
+Example:
+
+\begin{lstlisting}
+i = i++ + 1;   // undefined behaviour
+\end{lstlisting}
+
+Modifying a variable more than once between sequence points leads to undefined behaviour.
+
+To avoid ambiguity:
+\begin{itemize}
+  \item Keep expressions simple.
+  \item Avoid modifying the same variable multiple times in one expression.
+\end{itemize}
+
+\subsection{4.7 Expression Statements}
+
+An unusual feature of C is that \textbf{any expression can serve as a statement}.
+
+Example:
+
+\begin{lstlisting}
+i = 10;
+i++;
+a + b;     // valid but pointless
+\end{lstlisting}
+
+An expression becomes a statement when followed by a semicolon.
+
+Expression statements are commonly used for:
+\begin{itemize}
+  \item Assignments
+  \item Function calls
+  \item Increment/decrement operations
+\end{itemize}
+
+\subsection{4.8 Summary}
+
+\begin{itemize}
+  \item C emphasizes expressions as the core of computation.
+  \item Operators combine operands to form more complex expressions.
+  \item Arithmetic operators follow precedence and associativity rules.
+  \item Assignment is itself an expression and associates right-to-left.
+  \item Compound assignment operators provide shorthand notation.
+  \item Pre- and post-increment operators behave differently inside expressions.
+  \item Avoid undefined behaviour caused by modifying a variable multiple times in one expression.
+  \item Any expression can function as a statement in C.
+\end{itemize}
