@@ -1,0 +1,158 @@
+\section{Arrays}
+
+\noindent So far only variables we have seen have been \textbf{\textit{scalar}} values, capable of 
+holding a single data item. C also has \textbf{\textit{aggregate}} variables, which can hold collections
+of variables. There are two types in C i.) arrays and ii.) structures. We only cover arrays here.
+
+\subsection{One dimensional Arrays}
+
+\noindent An array is a data structure containing a number of data values, all of which have
+the same type. These values, known as elements, can be individually selected by
+their position within the array.
+
+To declare an array, we must specify the type of the array's elements and the
+number of elements e.g.
+
+\begin{lstlisting}[caption={1-D array example}, label={code: Ch8 1-D array}]
+    int a[10] ;
+\end{lstlisting}
+
+\noindent which creates an array of integers with 10 elements. Also:
+
+\begin{itemize}
+ \item an array can be of any type.
+ \item elements are ordered starting from 0.
+ \item elements in an array can be indexed by writing the array name followed by an
+integer value in square brackets e.g. a[0] = 1 makes the first element be 1.
+\end{itemize}
+
+Some typical operations on an array are:
+
+\begin{lstlisting}[caption={Idiom 1: Clearing a}, label={code: idiom 1 clearing a}]
+    a[10];
+
+    for(int i = 0; i < 10; i++)
+        int a[i] = 0;
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Idiom 1: read data into a}, label={code: read data into a}]
+    a[10];
+
+    for(int i = 0; i < 10; i++)
+        scanf("%d", $a[i]);
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Idiom 1: sum elements of a}, label={code: sum elements of a}]
+    a[10];
+
+    for (i = 0; i < N; i++)
+        sum += a[i];
+\end{lstlisting}
+
+Note: C doesn't require that subscript bounds be checked; if a subscript goes out of
+range, the program's behavior is undefined. One cause of a subscript going out of
+bounds: forgetting that an array with n elements is indexed from 0 to n - 1, not 1 to
+n.
+
+\subsubsection{Array Initialisation}
+
+\noindent Arrays like all variables, can be given values at intialisation. There are few ways. 
+The most common is  form of array initializer is a list of constant expressions
+enclosed in braces and separated by commas:
+
+\begin{lstlisting}[caption={Array initializer}, label={code: array initializer}]
+    a[10] = {1,2,3,4,5,6,7,8,9,10}; .
+\end{lstlisting}
+
+\noindent If the initialzer is shorter than the array the reamining values are designated 0. This can be 
+used to make all elements 0 via a[10] = {0}.
+
+\subsubsection{Designated Initializers}
+
+\noindent We want element 2 of the array to be 29, element 9 to be 7, and element 14 to be
+48, but the other values are just zero:
+
+\begin{lstlisting}[caption{Designated initializers. The order in which the indexes are written does 
+not matter}, label={code:Designated initializer}]
+    int a[15] = {[2] = 29, [9] = 7, [14] = 48};
+\end{lstlisting}
+
+\noindent Each number in brackets is said to be a designator. Designators must be integer constant expressions. If the array being initialized
+has length n, each designator must be between 0 and n - 1. However, if the length
+of the array is omitted, a designator can be any nonnegative integer. In the latter
+case, the compiler will deduce the length of the array from the largest designator.
+
+\subsubsection{Sizeof Operator with Arrays}
+
+\noindent The sizeof operator can determine the size of an array (in bytes). If a is an array
+of 10 integers, then sizeof (a) is typically 40 (assuming that each integer
+requires four bytes).
+
+\noindent We can also use sizeof to measure the size of an array element, such as
+a [0]. 
+
+\subsection{Multi-dimensional Arrays}
+
+C can create multidimensional arrays, termed matrices, e.g.
+
+\begin{lstlisting}[caption{A 5 by 9 matrix}, label={code:Matrix}]
+    int a[5][9]
+\end{lstlisting}
+
+\noindent which has 5 rows and 9 columns. Although we visualize two-dimensional arrays as tables, that's not the way
+they're actually stored in computer memory. C stores arrays in row-major order, with
+row 0 first, then row 1, and so forth.
+
+For loops can be used to initilise the matrix. For example to make an identity matrix:
+
+\begin{lstlisting}[caption{Identity MAtrix}, label={code:identity matrix}]
+    #define N 10
+    double ident [N] [N];
+    int row, col:
+    for (row = 0; row < N; row++)
+        for (col = 0; col < N; col++(
+            if (row == col)
+            ident [row] [col] = 1.0;
+            else
+            ident [row] [col] = 0.0;
+\end{lstlisting}
+
+\noindent Multidimensional arrays play a lesser role in C than in many other programming languages, 
+primarily because C provides a more flexible way to store multidimensional data: arrays of pointers.
+
+\subsubsection{Initialzers for Arrays}
+
+\noindent Similar as the 1-D case but use need to index the row and column
+
+\begin{lstlisting}[caption{Initializer for multi-d array}]
+    double ident [2] [2] = {[0] [0] = 1.0, [1] [1] = 1.0};
+\end{lstlisting}
+
+\subsection{Variable Length Array}
+
+rray variable must be specified by a constant expression. In C99, however, it's sometimes possible 
+to use an expression that's not constant. The following program illustrates this ability:
+
+\begin{\lstlisting}[\caption{Variable Length Array}]
+
+/* Reverses a series of numbers using a variable-length
+array C99 only */
+#include <stdio.h>
+
+int main(void)
+    int i, n;
+    printf("How many numbers do you want to reverse? ");
+
+    scanf ("%d", &n);
+    int a[n]; /* C99 only length of array depends on n */
+    
+    printf("Enter d numbers: ", n);
+
+    for (i = 0; i<n; i++)
+        scanf ("%d", &a[i]);
+    printf ("In reverse order:");
+    for (i = n1; i >= 0; i--)
+    printf(" %d", a[i]);
+    printf("\n");
+return 0:
+\end{\lstlisting}

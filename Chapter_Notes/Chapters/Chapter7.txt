@@ -121,7 +121,7 @@ printf("%Lf", ld);
 In calls to \texttt{printf}, the \texttt{e}, \texttt{f}, and \texttt{g} conversion specifiers may be used for
 both \texttt{float} and \texttt{double} values.
 
-\section{Character Types}
+\subsection{Character Types}
 
 The only remaining basic type is char, the character type. The values of char differ from one machine to
 the next as different machines may have different underlying character sets. The most popular is the ASCII 
