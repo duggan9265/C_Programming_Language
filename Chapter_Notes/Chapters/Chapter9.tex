@@ -1,0 +1,375 @@
+\section{Functions}
+
+\subsection{Introduction}
+
+\begin{itemize}
+    \item A \textbf{function} is a named group of statements.
+    \item Functions are the basic building blocks of C programs.
+    \item A function:
+    \begin{itemize}
+        \item May have parameters
+        \item May return a value
+        \item May also do neither
+    \end{itemize}
+    \item Each function has:
+    \begin{itemize}
+        \item Its own variables
+        \item Its own statements
+    \end{itemize}
+    \item Benefits of functions:
+    \begin{itemize}
+        \item Modularity
+        \item Easier debugging
+        \item Code reuse
+        \item Improved readability
+    \end{itemize}
+\end{itemize}
+
+\subsection{Defining and Calling Functions (9.1)}
+
+\subsubsection{Function Definitions}
+
+General form:
+
+\begin{verbatim}
+return-type function-name(parameter declarations)
+{
+    declarations
+    statements
+}
+\end{verbatim}
+
+Example:
+
+\begin{verbatim}
+double average(double a, double b)
+{
+    return (a + b) / 2;
+}
+\end{verbatim}
+
+\begin{itemize}
+    \item The \textbf{return type} specifies the type of value returned.
+    \item If no value is returned, the return type is \texttt{void}.
+    \item Parameter declarations specify type and name.
+\end{itemize}
+
+\subsubsection{Function Calls}
+
+Example:
+
+\begin{verbatim}
+printf("Average: %g\n", average(x, y));
+\end{verbatim}
+
+\begin{itemize}
+    \item A function call consists of:
+    \begin{itemize}
+        \item Function name
+        \item Parentheses
+        \item Arguments (optional)
+    \end{itemize}
+    \item The returned value can:
+    \begin{itemize}
+        \item Be assigned
+        \item Be printed
+        \item Be used in expressions
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Execution of Function Calls}
+
+\begin{itemize}
+    \item Control transfers to the called function.
+    \item Arguments are evaluated before the call.
+    \item Parameters receive copies of argument values.
+    \item Execution resumes after the call completes.
+\end{itemize}
+
+\subsubsection{Local Variables}
+
+\begin{itemize}
+    \item Variables declared inside a function are \textbf{local}.
+    \item Local variables:
+    \begin{itemize}
+        \item Exist only during function execution
+        \item Are not accessible outside the function
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Scope}
+
+\begin{itemize}
+    \item Scope = region where an identifier is visible.
+    \item Parameters and local variables are visible only inside the function.
+    \item Different functions may use the same variable names.
+\end{itemize}
+
+\subsubsection{The \texttt{main} Function}
+
+\begin{itemize}
+    \item Every program must contain \texttt{main}.
+    \item Execution begins in \texttt{main}.
+    \item \texttt{main} normally returns an integer.
+\end{itemize}
+
+\subsection{Function Declarations (9.2)}
+
+\subsubsection{Function Prototypes}
+
+Example:
+
+\begin{verbatim}
+double average(double a, double b);
+\end{verbatim}
+
+\begin{itemize}
+    \item A function declaration specifies:
+    \begin{itemize}
+        \item Function name
+        \item Return type
+        \item Parameter types
+    \end{itemize}
+    \item A declaration ends with a semicolon.
+    \item No function body is included.
+\end{itemize}
+
+\subsubsection{Purpose of Prototypes}
+
+\begin{itemize}
+    \item Allow functions to be called before definition.
+    \item Enable compiler type checking.
+\end{itemize}
+
+\subsubsection{Parameter Names in Prototypes}
+
+\begin{verbatim}
+double average(double, double);
+\end{verbatim}
+
+\begin{itemize}
+    \item Parameter names are optional.
+    \item Types are required.
+\end{itemize}
+
+\subsubsection{Compiler Checking}
+
+The compiler verifies:
+
+\begin{itemize}
+    \item Correct number of arguments
+    \item Correct argument types
+    \item Correct return type usage
+\end{itemize}
+
+\subsection{Arguments (9.3)}
+
+\subsubsection{Call by Value}
+
+\begin{itemize}
+    \item C passes arguments by value.
+    \item Parameters receive copies.
+\end{itemize}
+
+Example:
+
+\begin{verbatim}
+void f(int x)
+{
+    x = 10;
+}
+\end{verbatim}
+
+\begin{itemize}
+    \item Changing \texttt{x} does not affect the caller.
+\end{itemize}
+
+\subsubsection{Parameter Matching}
+
+\begin{itemize}
+    \item Arguments are matched by position.
+    \item Number and types must agree with prototype.
+\end{itemize}
+
+\subsubsection{Type Conversions}
+
+\begin{itemize}
+    \item Automatic conversions occur if needed.
+\end{itemize}
+
+Example:
+
+\begin{verbatim}
+double f(double x);
+
+f(3);
+\end{verbatim}
+
+\begin{itemize}
+    \item Integer 3 is converted to double.
+\end{itemize}
+
+\subsubsection{Array Arguments}
+
+\begin{verbatim}
+int sum_array(int a[], int n)
+{
+    int i, sum = 0;
+
+    for (i = 0; i < n; i++)
+        sum += a[i];
+
+    return sum;
+}
+\end{verbatim}
+
+\begin{itemize}
+    \item Arrays are passed by reference (address is passed).
+    \item Changes inside the function affect the original array.
+\end{itemize}
+
+\subsection{The \texttt{return} Statement (9.4)}
+
+\subsubsection{Returning a Value}
+
+\begin{verbatim}
+return expression;
+\end{verbatim}
+
+\begin{itemize}
+    \item Expression type must match return type.
+\end{itemize}
+
+Example:
+
+\begin{verbatim}
+return (a + b) / 2;
+\end{verbatim}
+
+\subsubsection{Returning Nothing}
+
+\begin{verbatim}
+return;
+\end{verbatim}
+
+\begin{itemize}
+    \item Used in \texttt{void} functions.
+\end{itemize}
+
+\subsubsection{Multiple Returns}
+
+\begin{itemize}
+    \item A function may contain multiple return statements.
+\end{itemize}
+
+Example:
+
+\begin{verbatim}
+int max(int a, int b)
+{
+    if (a > b)
+        return a;
+    else
+        return b;
+}
+\end{verbatim}
+
+\subsection{Program Termination (9.5)}
+
+\subsubsection{Returning from \texttt{main}}
+
+\begin{verbatim}
+return 0;
+\end{verbatim}
+
+\begin{itemize}
+    \item Indicates successful termination.
+\end{itemize}
+
+\subsubsection{Reaching End of \texttt{main}}
+
+\begin{itemize}
+    \item Equivalent to:
+
+\begin{verbatim}
+return 0;
+\end{verbatim}
+\end{itemize}
+
+\subsubsection{The \texttt{exit} Function}
+
+\begin{verbatim}
+exit(status);
+\end{verbatim}
+
+\begin{itemize}
+    \item Immediately terminates the program.
+    \item Declared in \texttt{<stdlib.h>}.
+\end{itemize}
+
+Common values:
+
+\begin{verbatim}
+exit(EXIT_SUCCESS);
+exit(EXIT_FAILURE);
+\end{verbatim}
+
+\subsection{Recursion (9.6)}
+
+\subsubsection{Definition}
+
+\begin{itemize}
+    \item A recursive function calls itself.
+\end{itemize}
+
+Example:
+
+\begin{verbatim}
+int factorial(int n)
+{
+    if (n <= 1)
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+\end{verbatim}
+
+\subsubsection{Essential Requirements}
+
+\begin{itemize}
+    \item Base case (stopping condition)
+    \item Recursive case
+\end{itemize}
+
+\subsubsection{How Recursion Works}
+
+\begin{itemize}
+    \item Each call creates a new set of local variables.
+    \item Calls are stored on the program stack.
+    \item Calls return in reverse order.
+\end{itemize}
+
+\subsubsection{Advantages}
+
+\begin{itemize}
+    \item Natural for divide-and-conquer problems.
+    \item Often simpler and clearer.
+\end{itemize}
+
+\subsubsection{Disadvantages}
+
+\begin{itemize}
+    \item Uses more memory.
+    \item Usually slower than iteration.
+    \item Risk of infinite recursion.
+\end{itemize}
+
+\subsection{Important Rules and Pitfalls}
+
+\begin{itemize}
+    \item Always declare functions before use.
+    \item Ensure argument types match prototypes.
+    \item Remember arguments are passed by value.
+    \item Local variables are not preserved between calls.
+    \item Recursive functions must terminate.
+\end{itemize}

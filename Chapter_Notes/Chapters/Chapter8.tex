@@ -1,158 +1,257 @@
 \section{Arrays}
 
-\noindent So far only variables we have seen have been \textbf{\textit{scalar}} values, capable of 
-holding a single data item. C also has \textbf{\textit{aggregate}} variables, which can hold collections
-of variables. There are two types in C i.) arrays and ii.) structures. We only cover arrays here.
-
-\subsection{One dimensional Arrays}
-
-\noindent An array is a data structure containing a number of data values, all of which have
-the same type. These values, known as elements, can be individually selected by
-their position within the array.
-
-To declare an array, we must specify the type of the array's elements and the
-number of elements e.g.
-
-\begin{lstlisting}[caption={1-D array example}, label={code: Ch8 1-D array}]
-    int a[10] ;
-\end{lstlisting}
-
-\noindent which creates an array of integers with 10 elements. Also:
+\subsection{Overview}
 
 \begin{itemize}
- \item an array can be of any type.
- \item elements are ordered starting from 0.
- \item elements in an array can be indexed by writing the array name followed by an
-integer value in square brackets e.g. a[0] = 1 makes the first element be 1.
+    \item Variables encountered so far have been \textbf{scalar variables}, capable of holding a single value.
+    \item C also supports \textbf{aggregate variables}, which store collections of values.
+    \item The two aggregate types in C are:
+    \begin{itemize}
+        \item Arrays
+        \item Structures
+    \end{itemize}
+    \item This chapter covers \textbf{arrays}.
 \end{itemize}
 
-Some typical operations on an array are:
+\subsection{One-Dimensional Arrays}
 
-\begin{lstlisting}[caption={Idiom 1: Clearing a}, label={code: idiom 1 clearing a}]
-    a[10];
+\begin{itemize}
+    \item An \textbf{array} is a data structure containing multiple values of the same type.
+    \item Individual values are called \textbf{elements}.
+    \item Elements are accessed using an \textbf{index (subscript)}.
+\end{itemize}
 
-    for(int i = 0; i < 10; i++)
-        int a[i] = 0;
+\subsubsection{Array Declaration}
+
+To declare an array, specify the element type and number of elements:
+
+\begin{lstlisting}[caption={One-dimensional array declaration}]
+int a[10];
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Idiom 1: read data into a}, label={code: read data into a}]
-    a[10];
+\begin{itemize}
+    \item The array contains 10 integers.
+    \item Arrays may be of any type.
+    \item Elements are indexed starting at 0.
+    \item Valid indices for an array of size $n$ are:
+    \[
+    0 \text{ to } n-1
+    \]
+\end{itemize}
 
-    for(int i = 0; i < 10; i++)
-        scanf("%d", $a[i]);
+Example:
+
+\begin{lstlisting}
+a[0] = 1;   /* assigns 1 to first element */
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Idiom 1: sum elements of a}, label={code: sum elements of a}]
-    a[10];
+\subsubsection{Common Array Operations}
 
-    for (i = 0; i < N; i++)
-        sum += a[i];
+Clearing an array:
+
+\begin{lstlisting}[caption={Clearing an array}]
+for (int i = 0; i < 10; i++)
+    a[i] = 0;
 \end{lstlisting}
 
-Note: C doesn't require that subscript bounds be checked; if a subscript goes out of
-range, the program's behavior is undefined. One cause of a subscript going out of
-bounds: forgetting that an array with n elements is indexed from 0 to n - 1, not 1 to
-n.
+Reading data into an array:
 
-\subsubsection{Array Initialisation}
-
-\noindent Arrays like all variables, can be given values at intialisation. There are few ways. 
-The most common is  form of array initializer is a list of constant expressions
-enclosed in braces and separated by commas:
-
-\begin{lstlisting}[caption={Array initializer}, label={code: array initializer}]
-    a[10] = {1,2,3,4,5,6,7,8,9,10}; .
+\begin{lstlisting}[caption={Reading data into an array}]
+for (int i = 0; i < 10; i++)
+    scanf("%d", &a[i]);
 \end{lstlisting}
 
-\noindent If the initialzer is shorter than the array the reamining values are designated 0. This can be 
-used to make all elements 0 via a[10] = {0}.
+Summing elements:
+
+\begin{lstlisting}[caption={Summing array elements}]
+int sum = 0;
+
+for (int i = 0; i < N; i++)
+    sum += a[i];
+\end{lstlisting}
+
+\subsubsection{Array Bounds}
+
+\begin{itemize}
+    \item C does \textbf{not check array bounds}.
+    \item Accessing outside the array produces \textbf{undefined behaviour}.
+    \item Common mistake:
+    \begin{itemize}
+        \item Using indices $1$ to $n$ instead of $0$ to $n-1$.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Array Initialization}
+
+Arrays may be initialized when declared:
+
+\begin{lstlisting}[caption={Array initializer}]
+int a[10] = {1,2,3,4,5,6,7,8,9,10};
+\end{lstlisting}
+
+\begin{itemize}
+    \item Initializer values must be constant expressions.
+    \item If fewer values are given, the remaining elements become 0.
+\end{itemize}
+
+Example:
+
+\begin{lstlisting}
+int a[10] = {0};   /* all elements initialized to 0 */
+\end{lstlisting}
 
 \subsubsection{Designated Initializers}
 
-\noindent We want element 2 of the array to be 29, element 9 to be 7, and element 14 to be
-48, but the other values are just zero:
+Specific elements may be initialized using designators:
 
-\begin{lstlisting}[caption={Designated initializers. The order in which the indexes are written does 
-not matter}, label={code:Designated initializer}]
-    int a[15] = {[2] = 29, [9] = 7, [14] = 48};
+\begin{lstlisting}[caption={Designated initializers}]
+int a[15] = {[2] = 29, [9] = 7, [14] = 48};
 \end{lstlisting}
 
-\noindent Each number in brackets is said to be a designator. Designators must be integer constant expressions. If the array being initialized
-has length n, each designator must be between 0 and n - 1. However, if the length
-of the array is omitted, a designator can be any nonnegative integer. In the latter
-case, the compiler will deduce the length of the array from the largest designator.
+\begin{itemize}
+    \item Values not specified become 0.
+    \item Designators must be integer constant expressions.
+    \item Valid designators range from $0$ to $n-1$.
+\end{itemize}
 
-\subsubsection{Sizeof Operator with Arrays}
+\begin{itemize}
+    \item If the array length is omitted, the compiler determines the size from the largest designator.
+\end{itemize}
 
-\noindent The sizeof operator can determine the size of an array (in bytes). If a is an array
-of 10 integers, then sizeof (a) is typically 40 (assuming that each integer
-requires four bytes).
+\subsubsection{The \texttt{sizeof} Operator}
 
-\noindent We can also use sizeof to measure the size of an array element, such as
-a [0]. 
+\begin{itemize}
+    \item \texttt{sizeof} determines the size of an array in bytes.
+\end{itemize}
 
-\subsection{Multi-dimensional Arrays}
+Example:
 
-C can create multidimensional arrays, termed matrices, e.g.
-
-\begin{lstlisting}[caption={A 5 by 9 matrix}, label={code:Matrix}]
-    int a[5][9]
+\begin{lstlisting}
+sizeof(a)
 \end{lstlisting}
 
-\noindent which has 5 rows and 9 columns. Although we visualize two-dimensional arrays as tables, that's not the way
-they're actually stored in computer memory. C stores arrays in row-major order, with
-row 0 first, then row 1, and so forth.
+\begin{itemize}
+    \item If \texttt{a} contains 10 integers and each integer is 4 bytes:
+\end{itemize}
 
-For loops can be used to initilise the matrix. For example to make an identity matrix:
+\[
+sizeof(a) = 40
+\]
 
-\begin{lstlisting}[caption={Identity MAtrix}, label={code:identity matrix}]
-    #define N 10
-    double ident [N] [N];
-    int row, col:
-    for (row = 0; row < N; row++)
-        for (col = 0; col < N; col++(
-            if (row == col)
-            ident [row] [col] = 1.0;
-            else
-            ident [row] [col] = 0.0;
+\begin{itemize}
+    \item Element size:
+
+\begin{lstlisting}
+sizeof(a[0])
 \end{lstlisting}
 
-\noindent Multidimensional arrays play a lesser role in C than in many other programming languages, 
-primarily because C provides a more flexible way to store multidimensional data: arrays of pointers.
+    \item Number of elements:
 
-\subsubsection{Initialzers for Arrays}
-
-\noindent Similar as the 1-D case but use need to index the row and column
-
-\begin{lstlisting}[caption={Initializer for multi-d array}]
-    double ident [2] [2] = {[0] [0] = 1.0, [1] [1] = 1.0};
+\begin{lstlisting}
+sizeof(a) / sizeof(a[0])
 \end{lstlisting}
 
-\subsection{Variable Length Array}
+\end{itemize}
 
-rray variable must be specified by a constant expression. In C99, however, it's sometimes possible 
-to use an expression that's not constant. The following program illustrates this ability:
+\subsection{Multidimensional Arrays}
 
-\begin{lstlisting}[\caption={Variable Length Array}]
+\begin{itemize}
+    \item C supports multidimensional arrays.
+    \item Two-dimensional arrays are often called \textbf{matrices}.
+\end{itemize}
 
-/* Reverses a series of numbers using a variable-length
-array C99 only */
+Example:
+
+\begin{lstlisting}[caption={Two-dimensional array}]
+int a[5][9];
+\end{lstlisting}
+
+\begin{itemize}
+    \item 5 rows
+    \item 9 columns
+\end{itemize}
+
+\subsubsection{Storage Order}
+
+\begin{itemize}
+    \item Arrays are stored in \textbf{row-major order}.
+    \item Row 0 is stored first, then row 1, etc.
+\end{itemize}
+
+\subsubsection{Initializing a Matrix}
+
+Example: identity matrix
+
+\begin{lstlisting}[caption={Identity matrix}]
+#define N 10
+
+double ident[N][N];
+
+for (int row = 0; row < N; row++)
+    for (int col = 0; col < N; col++)
+        if (row == col)
+            ident[row][col] = 1.0;
+        else
+            ident[row][col] = 0.0;
+\end{lstlisting}
+
+\begin{itemize}
+    \item Multidimensional arrays are less common in C than in some languages.
+    \item Arrays of pointers often provide more flexibility.
+\end{itemize}
+
+\subsubsection{Multidimensional Initializers}
+
+Example:
+
+\begin{lstlisting}[caption={Multidimensional initializer}]
+double ident[2][2] = {[0][0] = 1.0, [1][1] = 1.0};
+\end{lstlisting}
+
+\subsection{Variable-Length Arrays}
+
+\begin{itemize}
+    \item Normally array size must be a constant expression.
+    \item In C99, arrays may use a non-constant size.
+    \item These are called \textbf{variable-length arrays (VLAs)}.
+\end{itemize}
+
+Example:
+
+\begin{lstlisting}[caption={Variable-length array example}]
 #include <stdio.h>
 
 int main(void)
-    int i, n;
+{
+    int n;
+
     printf("How many numbers do you want to reverse? ");
+    scanf("%d", &n);
 
-    scanf ("%d", &n);
-    int a[n]; /* C99 only length of array depends on n */
-    
-    printf("Enter d numbers: ", n);
+    int a[n];   /* size determined at runtime */
 
-    for (i = 0; i<n; i++)
-        scanf ("%d", &a[i]);
-    printf ("In reverse order:");
-    for (i = n1; i >= 0; i--)
-    printf(" %d", a[i]);
+    printf("Enter %d numbers: ", n);
+
+    for (int i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    printf("In reverse order:");
+
+    for (int i = n-1; i >= 0; i--)
+        printf(" %d", a[i]);
+
     printf("\n");
-return 0:
+
+    return 0;
+}
 \end{lstlisting}
+
+\subsection{Important Rules and Pitfalls}
+
+\begin{itemize}
+    \item Array indices start at 0.
+    \item C does not perform bounds checking.
+    \item Accessing outside an array causes undefined behaviour.
+    \item Arrays store elements contiguously in memory.
+    \item Use \texttt{sizeof(a)/sizeof(a[0])} to determine array length.
+\end{itemize}
