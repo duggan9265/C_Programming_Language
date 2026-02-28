@@ -72,7 +72,7 @@ used to make all elements 0 via a[10] = {0}.
 \noindent We want element 2 of the array to be 29, element 9 to be 7, and element 14 to be
 48, but the other values are just zero:
 
-\begin{lstlisting}[caption{Designated initializers. The order in which the indexes are written does 
+\begin{lstlisting}[caption={Designated initializers. The order in which the indexes are written does 
 not matter}, label={code:Designated initializer}]
     int a[15] = {[2] = 29, [9] = 7, [14] = 48};
 \end{lstlisting}
@@ -95,7 +95,7 @@ a [0].
 
 C can create multidimensional arrays, termed matrices, e.g.
 
-\begin{lstlisting}[caption{A 5 by 9 matrix}, label={code:Matrix}]
+\begin{lstlisting}[caption={A 5 by 9 matrix}, label={code:Matrix}]
     int a[5][9]
 \end{lstlisting}
 
@@ -105,7 +105,7 @@ row 0 first, then row 1, and so forth.
 
 For loops can be used to initilise the matrix. For example to make an identity matrix:
 
-\begin{lstlisting}[caption{Identity MAtrix}, label={code:identity matrix}]
+\begin{lstlisting}[caption={Identity MAtrix}, label={code:identity matrix}]
     #define N 10
     double ident [N] [N];
     int row, col:
@@ -124,7 +124,7 @@ primarily because C provides a more flexible way to store multidimensional data:
 
 \noindent Similar as the 1-D case but use need to index the row and column
 
-\begin{lstlisting}[caption{Initializer for multi-d array}]
+\begin{lstlisting}[caption={Initializer for multi-d array}]
     double ident [2] [2] = {[0] [0] = 1.0, [1] [1] = 1.0};
 \end{lstlisting}
 
@@ -133,7 +133,7 @@ primarily because C provides a more flexible way to store multidimensional data:
 rray variable must be specified by a constant expression. In C99, however, it's sometimes possible 
 to use an expression that's not constant. The following program illustrates this ability:
 
-\begin{\lstlisting}[\caption{Variable Length Array}]
+\begin{lstlisting}[\caption={Variable Length Array}]
 
 /* Reverses a series of numbers using a variable-length
 array C99 only */
@@ -155,4 +155,4 @@ int main(void)
     printf(" %d", a[i]);
     printf("\n");
 return 0:
-\end{\lstlisting}
+\end{lstlisting}
